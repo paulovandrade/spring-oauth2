@@ -1,0 +1,29 @@
+package com.s2it.springoauth2;
+
+import java.util.Optional;
+
+import com.s2it.springoauth2.model.User;
+import com.s2it.springoauth2.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OAuthUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public UserDetails loadUserByUsername (final String email) throws UsernameNotFoundException {
+        final Optional<User> user = userService.findByEmail(email);
+
+        if (user.isPresent()) {
+            return OAuthUserDetailsFactory.create(user.get());
+        }
+
+        throw new UsernameNotFoundException("Email não encontrado.");
+    }
+}

@@ -1,5 +1,6 @@
 package com.s2it.springoauth2.config;
 
+import com.s2it.springoauth2.OAuthUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,9 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private OAuthUserDetailsService oAuthUserDetailsService;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -30,10 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("bill").password(encoder().encode("abc123")).roles("ADMIN").and()
-                .withUser("bob").password(encoder().encode("abc123")).roles("USER")
-        .and().passwordEncoder(encoder());
+        auth.userDetailsService(oAuthUserDetailsService).passwordEncoder(encoder());
     }
 
     @Bean
