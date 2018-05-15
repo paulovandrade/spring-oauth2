@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringOauth2ApplicationTests {
+public class SpringOAuth2ApplicationTests {
 
 	@Test
 	public void contextLoads() {
