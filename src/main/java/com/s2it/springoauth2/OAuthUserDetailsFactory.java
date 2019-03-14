@@ -1,12 +1,12 @@
 package com.s2it.springoauth2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.s2it.springoauth2.model.RoleEnum;
 import com.s2it.springoauth2.model.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OAuthUserDetailsFactory {
 
